@@ -100,28 +100,53 @@
                     </execution>
                 </executions>
             </plugin>        
-          <!--    
-                <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                        <webResources>
-                            <resource><directory>${project.basedir}/lib</directory>
-                                <targetPath>WEB-INF/lib</targetPath>
-                               <filtering>false</filtering>
-                            <includes>
-                            <include>**/*.jar</include>
-                            </includes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            <version>2.1.1</version>                
-            </plugin>
-        -->        
+              
+
+        
                 
- <plugin><artifactId>maven-compiler-plugin</artifactId><configuration><source>1.8</source><target>1.8</target><encoding>UTF-8</encoding><compilerArguments><extdirs>${project.basedir}/lib</extdirs></compilerArguments></configuration></plugin>
+ <plugin><artifactId>maven-compiler-plugin</artifactId>
+ <configuration>
+ <source>1.8</source>
+ <target>1.8</target>
+ <encoding>UTF-8</encoding>
+ <compilerArguments>
+ <extdirs>${project.basedir}/lib</extdirs>
+ </compilerArguments>
+ </configuration>
+ </plugin>
 
         </plugins>
+        
+        
+            <resources>  
+  
+        <resource>  
+  
+            <directory>lib</directory>  
+  
+            <targetPath>BOOT-INF/lib/</targetPath>  
+  
+            <includes>  
+  
+                <include>**/*.jar</include>  
+  
+            </includes>  
+  
+        </resource>  
+  
+
+ 
+        <resource>  
+  
+            <directory>src/main/resources</directory>  
+  
+            <targetPath>BOOT-INF/classes/</targetPath>  
+  
+        </resource>  
+  
+    </resources>
+    
+        
     </build>
 
     <repositories>
