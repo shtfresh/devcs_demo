@@ -1,16 +1,13 @@
-﻿#!/bin/bash
-
+#!/bin/bash
 # AREA=europe
 # IDENTITYDOMAIN=gse00002265
 # USER=cloud.admin
 # PASSWD=gReEDy@1Blow
 # 
 # psm setup
-
 echo ">>>Start Build.sh ...<<<"
 	pwd
 	ls -a
-
 APP_STATUS_RUNNING="RUNNING"
 JOB_STATUS_RUNNING="RUNNING"
 JOB_STATUS_SUCCEED="SUCCEED"
