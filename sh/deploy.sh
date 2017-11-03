@@ -31,7 +31,7 @@ psm -v
 echo ">>>End psm version...<<<"
 
 echo ">>>Start psm update...<<<"
-psm -update
+psm update
 echo ">>>End psm update...<<<"
 
 echo ">>>Start psm help...<<<"
