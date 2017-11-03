@@ -26,9 +26,21 @@ echo ">>>Start psm help...<<<"
 psm help
 echo ">>>End psm help...<<<"
 
-echo ">>>Start psm help...<<<"
+echo ">>>Start psm version...<<<"
 psm -v
+echo ">>>End psm version...<<<"
+
+echo ">>>Start psm update...<<<"
+psm -update
+echo ">>>End psm update...<<<"
+
+echo ">>>Start psm help...<<<"
+psm help
 echo ">>>End psm help...<<<"
+
+echo ">>>Start psm version...<<<"
+psm -v
+echo ">>>End psm version...<<<"
 
 echo ">>>Start psm 1...<<<"
 psm accs app -n $APP_NAME -of short
