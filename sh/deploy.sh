@@ -21,6 +21,11 @@ echo ">>>JOB_STATUS_SUCCEED=${JOB_STATUS_SUCCEED}"
 echo ">>>APP_ARCHIVE_URL=${APP_ARCHIVE_URL}"
 
 echo APP_NAME:$APP_NAME
+
+echo ">>>Start psm help...<<<"
+psm help
+echo ">>>End psm help...<<<"
+
 echo ">>>Start psm 1...<<<"
 psm accs app -n $APP_NAME -of short
 echo ">>>End psm 1...<<<"
@@ -41,14 +46,14 @@ echo accs_push_jobid:$accs_push_jobid
 
 echo "APP: " $APP_NAME "を登録しています。"
 accs_push_status=$JOB_STATUS_RUNNING
-while [ $accs_push_status == $JOB_STATUS_RUNNING ]
+while [ "$accs_push_status" == "$JOB_STATUS_RUNNING" ]
 do
     accs_push_status=$(psm accs operation-status -j $accs_push_jobid -of short | grep 'Status:' | awk '{print $2}')
 	echo .
 	sleep 10
 done
 
-if [ $accs_push_status == $JOB_STATUS_SUCCEED ]
+if [ "$accs_push_status" == "$JOB_STATUS_SUCCEED" ]
 then
   echo "APP: " $APP_NAME "の登録が正常に終了しました。"
 else
