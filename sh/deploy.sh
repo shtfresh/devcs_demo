@@ -1,28 +1,32 @@
 ﻿#!/bin/bash
 
-#AREA=europe
-#IDENTITYDOMAIN=gse00002265
-#USER=cloud.admin
-#PASSWD=gReEDy@1Blow
-#
-#psm setup
+# AREA=europe
+# IDENTITYDOMAIN=gse00002265
+# USER=cloud.admin
+# PASSWD=gReEDy@1Blow
+# 
+# psm setup
+
+echo ">>>Start Build.sh ...<<<"
+	pwd
+	ls -a
 
 APP_STATUS_RUNNING="RUNNING"
-
-
 JOB_STATUS_RUNNING="RUNNING"
 JOB_STATUS_SUCCEED="SUCCEED"
-
 APP_NAME=EmployeeWebApp
 APP_ARCHIVE_PATH=employees-web-app.zip
-APP_ARCHIVE_URL=target/EmployeeRESTApp-1.0-dist.zip #本番テストはURLを使う
+APP_ARCHIVE_URL=target/EmployeeRESTApp-1.0-dist.zip # 本番テストはURLを使う
+
+echo ">>>APP_STATUS_RUNNING=${APP_STATUS_RUNNING}"
+echo ">>>JOB_STATUS_RUNNING=${JOB_STATUS_RUNNING}"
+echo ">>>JOB_STATUS_SUCCEED=${JOB_STATUS_SUCCEED}"
+echo ">>>APP_ARCHIVE_URL=${APP_ARCHIVE_URL}"
 
 echo APP_NAME:$APP_NAME
-
-# | grep "Status:" | grep "RUNNING"
-
-# psm accs app -n ${APP_NAME} -of short
-
+echo ">>>Start psm 1...<<<"
+psm accs app -n $APP_NAME -of short
+echo ">>>End psm 1...<<<"
 app_status=$(psm accs app -n $APP_NAME -of short | grep 'Status:' | awk '{print $2}')
 
 echo app_status:$app_status 
@@ -32,8 +36,9 @@ if [ -n "$app_status" ]; then
 else
   echo "APP: " $APP_NAME "が既に存在しています。"
 fi
-
-accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short | grep 'Job ID:' | awk '{print $3}')  #本番テストはURLを使う
+echo ">>>Start psm 2...<<<"
+accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
+echo ">>>End psm 2...<<<"
 
 echo accs_push_jobid:$accs_push_jobid 
 
