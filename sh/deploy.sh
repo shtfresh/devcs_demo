@@ -13,7 +13,7 @@ JOB_STATUS_RUNNING="RUNNING"
 JOB_STATUS_SUCCEED="SUCCEED"
 APP_NAME=EmployeeWebApp
 APP_ARCHIVE_PATH=employees-web-app.zip
-APP_ARCHIVE_URL=target/EmployeeRESTApp-1.0-dist.zip # 本番テストはURLを使う
+APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip # 本番テストはURLを使う
 
 echo ">>>APP_STATUS_RUNNING=${APP_STATUS_RUNNING}"
 echo ">>>JOB_STATUS_RUNNING=${JOB_STATUS_RUNNING}"
@@ -24,6 +24,10 @@ echo APP_NAME:$APP_NAME
 
 echo ">>>Start psm help...<<<"
 psm help
+echo ">>>End psm help...<<<"
+
+echo ">>>Start psm help...<<<"
+psm -v
 echo ">>>End psm help...<<<"
 
 echo ">>>Start psm 1...<<<"
