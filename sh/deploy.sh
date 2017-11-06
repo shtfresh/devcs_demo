@@ -13,26 +13,9 @@ APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
 JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME=EmployeeWebApp #アプリケーションの名称
-APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip  #アプリケーションの格納場所
+APP_ARCHIVE_PATH=../target/EmployeeRESTApp-1.0-dist.zip  #アプリケーションの格納場所
 
 echo APP_NAME:$APP_NAME
-
-
-if [ -e $APP_ARCHIVE_URL ]; then
-    # 存在する場合
-	echo $APP_ARCHIVE_URL "が存在しています。"
-else
-    # 存在しない場合
-	echo $APP_ARCHIVE_URL "が存在していません。"
-fi
-
-if [ -e deployment.json ]; then
-    # 存在する場合
-	echo "deployment.json が存在しています。"
-else
-    # 存在しない場合
-	echo "deployment.json が存在していません。"
-fi
 
 #psm setup実行
 psm help
@@ -54,13 +37,27 @@ else
 fi
 
 #ACCSアプリケーションのデプロイ実行
-echo "ACCSアプリケーションのデプロイを実行します...1"
-psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short
-
-echo "ACCSアプリケーションのデプロイを実行します...2"
-accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
+echo "ACCSアプリケーションのデプロイを実行します..."
+accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -p $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
 
 echo accs_push_jobid:$accs_push_jobid 
 
+echo "APP: " $APP_NAME "を登録しています。"
+accs_push_status=$JOB_STATUS_RUNNING
+while [ "$accs_push_status" == "$JOB_STATUS_RUNNING" ]
+do
+    accs_push_status=$(psm accs operation-status -j $accs_push_jobid -of short | grep 'Status:' | awk '{print $2}')
+	echo .
+	sleep 10
+done
+
+if [ "$accs_push_status" == "$JOB_STATUS_SUCCEED" ]
+then
+  echo "APP: " $APP_NAME "の登録が正常に終了しました。"
+else
+  echo "APP: " $APP_NAME "の登録が異常に終了しました。"
+fi
+
+# DBCS インスタンス登録＆アクセスルールora_p2_dblistener略
 
 echo "deploy.sh が終了しました。"
