@@ -6,8 +6,8 @@ expect {
 		"Password:" {send "gReEDy@1Blow\r"; exp_continue}
 		"Retype Password:" {send "gReEDy@1Blow\r"; exp_continue}
 		"Identity domain:" {send "gse00002265\r"; exp_continue}
-        "Region [us]" {send "emea\r"; exp_continue}
-		"Output format [short]:" {send "\r"}
+        "Region" {send "emea\r"; exp_continue}
+		"Output format:" {send "\r"}
 }
 expect eof
 echo ">>>End psm setup...<<<"
