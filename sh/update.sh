@@ -4,6 +4,7 @@ echo ">>>Start psm version...<<<"
 psm -v
 echo ">>>End psm version...<<<"
 
+
 sudo -s
 echo ">>>Start who am i ...<<<"
 who
