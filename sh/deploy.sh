@@ -7,10 +7,7 @@ IDENTITY_DOMAIN="gse00002265"
 REGION="emea"
 OUTPUT_FORMAT="short"
 
-echo ">>>Start Build.sh ...<<<"
-	pwd
-	ls -a
-	
+echo "deploy.sh を開始します..."
 
 APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
 JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
@@ -65,4 +62,4 @@ fi
 
 # DBCS インスタンス登録＆アクセスルールora_p2_dblistener略
 
-
+echo "deploy.sh が終了しました。"
