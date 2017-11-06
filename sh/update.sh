@@ -11,7 +11,7 @@ echo ">>>End who am i ...<<<"
 
 echo -e "cloud.admin\ngReEDy@1Blow\ngReEDy@1Blow\ngse00002265\nemea\nshort" | psm setup
 
-sudo psm update
+psm update
 
 echo ">>>Start psm version...<<<"
 psm -v
