@@ -12,8 +12,8 @@ echo "deploy.sh を開始します..."
 APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
 JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
-APP_NAME=EmployeeWebApp #アプリケーションの名称
-APP_ARCHIVE_PATH=../target/EmployeeRESTApp-1.0-dist.zip  #アプリケーションの格納場所
+APP_NAME="EmployeeWebApp" #アプリケーションの名称
+APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
 
 echo APP_NAME:$APP_NAME
 
