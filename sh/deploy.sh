@@ -18,10 +18,8 @@ APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #アプリケーシ�
 echo APP_NAME:$APP_NAME
 
 #psm setup実行
-psm help
 psm -v
 echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FORMAT" | psm setup
-psm help
 
 #ACCSアプリケーション存在チェック実行
 echo "ACCSアプリケーション存在チェックを実行します..."
@@ -38,6 +36,14 @@ fi
 
 #ACCSアプリケーションのデプロイ実行
 echo "ACCSアプリケーションのデプロイを実行します..."
+
+
+
+
+psm accs push h
+
+
+
 accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -p $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
 
 echo accs_push_jobid:$accs_push_jobid 
