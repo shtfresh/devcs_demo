@@ -25,7 +25,7 @@ if [ -e $APP_ARCHIVE_PATH ]; then
 	echo $APP_ARCHIVE_PATH "が存在しています。"
 else
     # 存在しない場合
-	echo $APP_ARCHIVE_PATH "が存在していません。"
+	echo $APP_ARCHIVE_PATH "が存在していません。処理を終了します。"
 	exit 0
 fi
 
@@ -56,20 +56,20 @@ psm -v
 echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FORMAT" | psm setup
 
 #ACCSアプリケーション存在チェック実行
-echo "ACCSアプリケーション存在チェックを実行します..."
+echo "アプリケーション: " $APP_NAME "の存在チェックを実行します..."
 psm accs app -n $APP_NAME -of short
 app_status=$(psm accs app -n $APP_NAME -of short | grep 'Status:' | awk '{print $2}')
 
 echo app_status:$app_status 
 
 if [ -n "$app_status" ]; then
-  echo "APP: " $APP_NAME "が既に存在しています。"
+  echo "アプリケーション: " $APP_NAME "が既に存在しています。"
 else
-  echo "APP: " $APP_NAME "が存在していません。"
+  echo "アプリケーション: " $APP_NAME "が存在していません。"
 fi
 
 #ACCSアプリケーションのデプロイ実行
-echo "ACCSアプリケーションのデプロイを実行します..."
+echo "アプリケーション: " $APP_NAME "のデプロイを実行します..."
 accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short | grep 'Job ID:' | awk '{print $3}')
 
 echo accs_push_jobid:$accs_push_jobid 
@@ -84,9 +84,9 @@ done
 
 if [ "$accs_push_status" == "$JOB_STATUS_SUCCEED" ]
 then
-  echo "APP: " $APP_NAME "の登録が正常に終了しました。"
+  echo "アプリケーション: " $APP_NAME "の登録が正常に終了しました。"
 else
-  echo "APP: " $APP_NAME "の登録が異常に終了しました。"
+  echo "アプリケーション: " $APP_NAME "の登録が異常に終了しました。"
 fi
 
 echo "deploy.sh が終了しました。"
