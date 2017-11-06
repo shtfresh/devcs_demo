@@ -14,7 +14,23 @@ JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME="EmployeeWebApp" #アプリケーションの名称
 APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
-
+#==================
+if [ -e $APP_ARCHIVE_PATH ]; then
+    # 存在する場合
+	echo $APP_ARCHIVE_PATH "が存在しています。"
+else
+    # 存在しない場合
+	echo $APP_ARCHIVE_PATH "が存在していません。"
+fi
+APP_ARCHIVE_PATH2="FirstDemo/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
+if [ -e $APP_ARCHIVE_PATH2 ]; then
+    # 存在する場合
+	echo $APP_ARCHIVE_PATH2 "が存在しています。"
+else
+    # 存在しない場合
+	echo $APP_ARCHIVE_PATH2 "が存在していません。"
+fi
+#==================
 echo APP_NAME:$APP_NAME
 
 #psm setup実行
@@ -41,7 +57,7 @@ echo "ACCSアプリケーションのデプロイを実行します..."
 
 #==================
 psm accs push h
-psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short
+psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH2 -of short
 
 #accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
 #==================
