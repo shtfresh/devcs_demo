@@ -13,7 +13,17 @@ APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
 JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME="EmployeeWebApp" #アプリケーションの名称
+
+#==================
+APP_ARCHIVE_NAME="EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
 APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
+
+STORAGE_CONTAINER=FirstDemoContainer
+REST_URL=https://em2.storage.oraclecloud.com  #アプリケーションの格納場所
+
+APP_ARCHIVE_URL="$REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER/$APP_ARCHIVE_NAME"
+#==================
+
 #==================
 if [ -e $APP_ARCHIVE_PATH ]; then
     # 存在する場合
@@ -32,6 +42,17 @@ else
 fi
 #==================
 echo APP_NAME:$APP_NAME
+
+
+#==================
+#upload実行
+token=`curl -v -s -X GET -H "X-Storage-User: Storage-$IDENTITY_DOMAIN:$USERNAME" -H "X-Storage-Pass: $PASSWORD" $REST_URL/auth/v1.0 |& grep X-Auth-Token | awk -F' ' '{print $3}'`
+
+curl -v -X PUT \
+     -H "X-Auth-Token: $token" \
+     -T $APP_ARCHIVE_PATH \
+     $APP_ARCHIVE_URL
+#==================
 
 #psm setup実行
 psm -v
@@ -53,11 +74,9 @@ fi
 #ACCSアプリケーションのデプロイ実行
 echo "ACCSアプリケーションのデプロイを実行します..."
 
-
-
 #==================
 psm accs push h
-psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH2 -of short
+psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short
 
 #accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
 #==================
