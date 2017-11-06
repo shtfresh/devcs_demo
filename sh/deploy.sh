@@ -32,9 +32,9 @@ app_status=$(psm accs app -n $APP_NAME -of short | grep 'Status:' | awk '{print 
 echo app_status:$app_status 
 
 if [ -n "$app_status" ]; then
-  echo "APP: " $APP_NAME "が存在していません。"
-else
   echo "APP: " $APP_NAME "が既に存在しています。"
+else
+  echo "APP: " $APP_NAME "が存在していません。"
 fi
 
 #ACCSアプリケーションのデプロイ実行
