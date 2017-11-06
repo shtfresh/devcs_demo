@@ -35,17 +35,23 @@ echo APP_NAME:$APP_NAME
 token=`curl -v -s -X GET -H "X-Storage-User: Storage-$IDENTITY_DOMAIN:$USERNAME" -H "X-Storage-Pass: $PASSWORD" $REST_URL/auth/v1.0 |& grep X-Auth-Token | awk -F' ' '{print $3}'`
 
 #container作成
+echo "containerを作成します..."
 curl -v -X PUT \
      -H "X-Auth-Token: $token" \
      $REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER
 
+	 
 #archiveをアップロードする
+echo "archiveをアップロードします..."
 curl -v -X PUT \
      -H "X-Auth-Token: $token" \
      -T $APP_ARCHIVE_PATH \
      $REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER/$APP_ARCHIVE_NAME
+	 
+echo "archive: " $APP_ARCHIVE_NAME "のアップロードが正常に終了しました。"
 
 #psm setup実行
+echo "psm setupを実行します..."
 psm -v
 echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FORMAT" | psm setup
 
