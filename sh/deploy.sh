@@ -17,6 +17,23 @@ APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip  #アプリケーショ�
 
 echo APP_NAME:$APP_NAME
 
+
+if [ -e $APP_ARCHIVE_URL ]; then
+    # 存在する場合
+	echo $APP_ARCHIVE_URL "が存在しています。"
+else
+    # 存在しない場合
+	echo $APP_ARCHIVE_URL "が存在していません。"
+fi
+
+if [ -e deployment.json ]; then
+    # 存在する場合
+	echo "deployment.json が存在しています。"
+else
+    # 存在しない場合
+	echo "deployment.json が存在していません。"
+fi
+
 #psm setup実行
 psm help
 psm -v
@@ -24,9 +41,8 @@ echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FOR
 psm help
 
 #ACCSアプリケーション存在チェック実行
-echo ">>>Start psm 1...<<<"
+echo "ACCSアプリケーション存在チェックを実行します..."
 psm accs app -n $APP_NAME -of short
-echo ">>>End psm 1...<<<"
 app_status=$(psm accs app -n $APP_NAME -of short | grep 'Status:' | awk '{print $2}')
 
 echo app_status:$app_status 
@@ -38,28 +54,13 @@ else
 fi
 
 #ACCSアプリケーションのデプロイ実行
-echo ">>>Start psm 2...<<<"
+echo "ACCSアプリケーションのデプロイを実行します...1"
+psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short
+
+echo "ACCSアプリケーションのデプロイを実行します...2"
 accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
-echo ">>>End psm 2...<<<"
 
 echo accs_push_jobid:$accs_push_jobid 
 
-echo "APP: " $APP_NAME "を登録しています。"
-accs_push_status=$JOB_STATUS_RUNNING
-while [ "$accs_push_status" == "$JOB_STATUS_RUNNING" ]
-do
-    accs_push_status=$(psm accs operation-status -j $accs_push_jobid -of short | grep 'Status:' | awk '{print $2}')
-	echo .
-	sleep 10
-done
-
-if [ "$accs_push_status" == "$JOB_STATUS_SUCCEED" ]
-then
-  echo "APP: " $APP_NAME "の登録が正常に終了しました。"
-else
-  echo "APP: " $APP_NAME "の登録が異常に終了しました。"
-fi
-
-# DBCS インスタンス登録＆アクセスルールora_p2_dblistener略
 
 echo "deploy.sh が終了しました。"
