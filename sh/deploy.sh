@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #psm setupパラメータ
-USERNAME=cloud.admin
-PASSWORD=gReEDy@1Blow
-IDENTITY_DOMAIN=gse00002265
-REGION=emea
-OUTPUT_FORMAT=short
+USERNAME="cloud.admin"
+PASSWORD="gReEDy@1Blow"
+IDENTITY_DOMAIN="gse00002265"
+REGION="emea"
+OUTPUT_FORMAT="short"
 
 echo ">>>Start Build.sh ...<<<"
 	pwd
