@@ -64,13 +64,8 @@ fi
 
 #ACCSアプリケーションのデプロイ実行
 echo "ACCSアプリケーションのデプロイを実行します..."
+accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short | grep 'Job ID:' | awk '{print $3}')
 
-#==================
-psm accs push h
-#psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short
-
-psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short | grep 'Job ID:' | awk '{print $3}')
-#==================
 echo accs_push_jobid:$accs_push_jobid 
 
 echo "APP: " $APP_NAME "を登録しています。"
@@ -88,7 +83,5 @@ then
 else
   echo "APP: " $APP_NAME "の登録が異常に終了しました。"
 fi
-
-# DBCS インスタンス登録＆アクセスルールora_p2_dblistener略
 
 echo "deploy.sh が終了しました。"
