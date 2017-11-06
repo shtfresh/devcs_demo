@@ -12,25 +12,21 @@ echo ">>>Start Build.sh ...<<<"
 	ls -a
 	
 
-APP_STATUS_RUNNING="RUNNING" #psm setup引数
-JOB_STATUS_RUNNING="RUNNING"
-JOB_STATUS_SUCCEED="SUCCEED"
-APP_NAME=EmployeeWebApp
-APP_ARCHIVE_PATH=employees-web-app.zip
-APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip # 本番テストはURLを使う
+APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
+JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
+JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
+APP_NAME=EmployeeWebApp #アプリケーションの名称
+APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip  #アプリケーションの格納場所
 
 echo APP_NAME:$APP_NAME
 
-#psm setup
+#psm setup実行
 psm help
-
 psm -v
-
 echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FORMAT" | psm setup
-
 psm help
 
-
+#ACCSアプリケーション存在チェック実行
 echo ">>>Start psm 1...<<<"
 psm accs app -n $APP_NAME -of short
 echo ">>>End psm 1...<<<"
@@ -43,6 +39,8 @@ if [ -n "$app_status" ]; then
 else
   echo "APP: " $APP_NAME "が既に存在しています。"
 fi
+
+#ACCSアプリケーションのデプロイ実行
 echo ">>>Start psm 2...<<<"
 accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
 echo ">>>End psm 2...<<<"
