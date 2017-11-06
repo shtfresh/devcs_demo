@@ -15,13 +15,11 @@ JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME="EmployeeWebApp" #アプリケーションの名称
 
 #==================
-APP_ARCHIVE_NAME="EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
-APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
+APP_ARCHIVE_NAME="EmployeeRESTApp-1.0-dist.zip"  #archive名称
+APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #archiveの格納場所（DevCS）
 
-STORAGE_CONTAINER=FirstDemoContainer
-REST_URL=https://em2.storage.oraclecloud.com  #アプリケーションの格納場所
-
-APP_ARCHIVE_URL="$REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER/$APP_ARCHIVE_NAME"
+STORAGE_CONTAINER=FirstDemoContainer #archiveを格納するstorage container名
+REST_URL=https://em2.storage.oraclecloud.com  #storage cloudのURL
 #==================
 
 #==================
@@ -31,14 +29,7 @@ if [ -e $APP_ARCHIVE_PATH ]; then
 else
     # 存在しない場合
 	echo $APP_ARCHIVE_PATH "が存在していません。"
-fi
-APP_ARCHIVE_PATH2="FirstDemo/EmployeeRESTApp-1.0-dist.zip"  #アプリケーションの格納場所
-if [ -e $APP_ARCHIVE_PATH2 ]; then
-    # 存在する場合
-	echo $APP_ARCHIVE_PATH2 "が存在しています。"
-else
-    # 存在しない場合
-	echo $APP_ARCHIVE_PATH2 "が存在していません。"
+	exit 0
 fi
 #==================
 echo APP_NAME:$APP_NAME
@@ -51,7 +42,7 @@ token=`curl -v -s -X GET -H "X-Storage-User: Storage-$IDENTITY_DOMAIN:$USERNAME"
 curl -v -X PUT \
      -H "X-Auth-Token: $token" \
      -T $APP_ARCHIVE_PATH \
-     $APP_ARCHIVE_URL
+     $REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER/$APP_ARCHIVE_NAME
 #==================
 
 #psm setup実行
@@ -76,9 +67,9 @@ echo "ACCSアプリケーションのデプロイを実行します..."
 
 #==================
 psm accs push h
-psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_URL -of short
+#psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short
 
-#accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
+psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $STORAGE_CONTAINER/$APP_ARCHIVE_NAME -of short | grep 'Job ID:' | awk '{print $3}')
 #==================
 echo accs_push_jobid:$accs_push_jobid 
 
