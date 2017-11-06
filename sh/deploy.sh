@@ -1,7 +1,7 @@
 #!/bin/bash
 # AREA=europe
 # IDENTITYDOMAIN=gse00002265
-# USER=cloud.admin
+USER=cloud.admin
 # PASSWD=gReEDy@1Blow
 # 
 # psm setup
@@ -29,6 +29,21 @@ echo ">>>End psm help...<<<"
 echo ">>>Start psm version...<<<"
 psm -v
 echo ">>>End psm version...<<<"
+
+echo ">>>Start psm setup1...<<<"
+psm echo "cloud.admin\ngReEDy@1Blow\ngReEDy@1Blow\ngse00002265\nemea\nshort" | psm setup
+echo ">>>Start psm setup2...<<<"
+spawn psm setup
+expect {
+        "Username:" {send "cloud.admin\r"; exp_continue}
+		"Password:" {send "gReEDy@1Blow\r"; exp_continue}
+		"Retype Password:" {send "gReEDy@1Blow\r"; exp_continue}
+		"Identity domain:" {send "gse00002265\r"; exp_continue}
+        "Region [us]" {send "emea\r"; exp_continue}
+		"Output format [short]:" {send "\r"}
+}
+expect eof
+echo ">>>End psm setup...<<<"
 
 echo ">>>Start psm update...<<<"
 psm update
