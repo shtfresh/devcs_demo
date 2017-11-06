@@ -1,56 +1,35 @@
 #!/bin/bash
-# AREA=europe
-# IDENTITYDOMAIN=gse00002265
-USER=cloud.admin
-# PASSWD=gReEDy@1Blow
-# 
-# psm setup
+
+#psm setupパラメータ
+USERNAME=cloud.admin
+PASSWORD=gReEDy@1Blow
+IDENTITY_DOMAIN=gse00002265
+REGION=emea
+OUTPUT_FORMAT=short
+
 echo ">>>Start Build.sh ...<<<"
 	pwd
 	ls -a
-APP_STATUS_RUNNING="RUNNING"
+	
+
+APP_STATUS_RUNNING="RUNNING" #psm setup引数
 JOB_STATUS_RUNNING="RUNNING"
 JOB_STATUS_SUCCEED="SUCCEED"
 APP_NAME=EmployeeWebApp
 APP_ARCHIVE_PATH=employees-web-app.zip
 APP_ARCHIVE_URL=../target/EmployeeRESTApp-1.0-dist.zip # 本番テストはURLを使う
 
-echo ">>>APP_STATUS_RUNNING=${APP_STATUS_RUNNING}"
-echo ">>>JOB_STATUS_RUNNING=${JOB_STATUS_RUNNING}"
-echo ">>>JOB_STATUS_SUCCEED=${JOB_STATUS_SUCCEED}"
-echo ">>>APP_ARCHIVE_URL=${APP_ARCHIVE_URL}"
-
 echo APP_NAME:$APP_NAME
 
-echo ">>>Start psm help...<<<"
+#psm setup
 psm help
-echo ">>>End psm help...<<<"
 
-echo ">>>Start psm version...<<<"
 psm -v
-echo ">>>End psm version...<<<"
 
-echo ">>>Start psm setup1...<<<"
-echo "cloud.admin\ngReEDy@1Blow\ngReEDy@1Blow\ngse00002265\nemea\nshort" | psm setup
-echo ">>>Start psm setup2...<<<"
-echo -e "cloud.admin\ngReEDy@1Blow\ngReEDy@1Blow\ngse00002265\nemea\nshort" | psm setup
-echo ">>>Start psm setup3...<<<"
+echo -e "$USERNAME\n$PASSWORD\n$PASSWORD\n$IDENTITY_DOMAIN\n$REGION\n$OUTPUT_FORMAT" | psm setup
 
-echo ">>>Start psm setup4...<<<"
-
-echo ">>>End psm setup...<<<"
-
-echo ">>>Start psm update...<<<"
-psm update
-echo ">>>End psm update...<<<"
-
-echo ">>>Start psm help...<<<"
 psm help
-echo ">>>End psm help...<<<"
 
-echo ">>>Start psm version...<<<"
-psm -v
-echo ">>>End psm version...<<<"
 
 echo ">>>Start psm 1...<<<"
 psm accs app -n $APP_NAME -of short
