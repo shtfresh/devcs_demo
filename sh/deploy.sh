@@ -39,12 +39,12 @@ echo "ACCSアプリケーションのデプロイを実行します..."
 
 
 
-
+#==================
 psm accs push h
 psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short
 
-accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
-
+#accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.json -u $APP_ARCHIVE_PATH -of short | grep 'Job ID:' | awk '{print $3}')  # 本番テストはURLを使う
+#==================
 echo accs_push_jobid:$accs_push_jobid 
 
 echo "APP: " $APP_NAME "を登録しています。"
