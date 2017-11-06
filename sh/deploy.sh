@@ -74,7 +74,6 @@ accs_push_jobid=$(psm accs push -n $APP_NAME -r java -s monthly -d deployment.js
 
 echo accs_push_jobid:$accs_push_jobid 
 
-echo "APP: " $APP_NAME "を登録しています。"
 accs_push_status=$JOB_STATUS_RUNNING
 while [ "$accs_push_status" == "$JOB_STATUS_RUNNING" ]
 do
