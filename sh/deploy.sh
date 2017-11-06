@@ -14,12 +14,15 @@ JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME="EmployeeWebApp" #アプリケーションの名称
 
+#==================
 APP_ARCHIVE_NAME="EmployeeRESTApp-1.0-dist.zip"  #archive名称
 APP_ARCHIVE_PATH="../target/EmployeeRESTApp-1.0-dist.zip"  #archiveの格納場所（DevCS）
 
 STORAGE_CONTAINER=FirstDemoContainer #archiveを格納するstorage container名
 REST_URL=https://em2.storage.oraclecloud.com  #storage cloudのURL
+#==================
 
+#==================
 if [ -e $APP_ARCHIVE_PATH ]; then
     # 存在する場合
 	echo $APP_ARCHIVE_PATH "が存在しています。"
@@ -28,22 +31,19 @@ else
 	echo $APP_ARCHIVE_PATH "が存在していません。"
 	exit 0
 fi
-
+#==================
 echo APP_NAME:$APP_NAME
 
-#storage cloud token取得
+
+#==================
+#upload実行
 token=`curl -v -s -X GET -H "X-Storage-User: Storage-$IDENTITY_DOMAIN:$USERNAME" -H "X-Storage-Pass: $PASSWORD" $REST_URL/auth/v1.0 |& grep X-Auth-Token | awk -F' ' '{print $3}'`
 
-#container作成
-curl -v -X PUT \
-     -H "X-Auth-Token: $token" \
-     $REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER
-
-#archiveをアップロードする
 curl -v -X PUT \
      -H "X-Auth-Token: $token" \
      -T $APP_ARCHIVE_PATH \
      $REST_URL/v1/Storage-$IDENTITY_DOMAIN/$STORAGE_CONTAINER/$APP_ARCHIVE_NAME
+#==================
 
 #psm setup実行
 psm -v
