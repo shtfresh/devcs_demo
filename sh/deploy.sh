@@ -9,7 +9,6 @@ OUTPUT_FORMAT="short"
 
 echo "deploy.sh を開始します..."
 
-APP_STATUS_RUNNING="RUNNING" #アプリケーションの状態
 JOB_STATUS_RUNNING="RUNNING" #ジョブの状態
 JOB_STATUS_SUCCEED="SUCCEED" #ジョブの状態
 APP_NAME="EmployeeWebApp" #アプリケーションの名称
